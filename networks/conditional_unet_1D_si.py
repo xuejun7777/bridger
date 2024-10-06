@@ -1,5 +1,5 @@
-from networks.conditional_unet_1D import *
-
+# from networks.conditional_unet_1D import *
+from .conditional_unet_1D import *
 
 class InterpolantsConditionalUnet1D(nn.Module):
     def __init__(self,

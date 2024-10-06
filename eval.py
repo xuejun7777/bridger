@@ -8,7 +8,7 @@ from model.stochastic_interpolants import StochasticInterpolants
 from model.vae import VAEModel
 
 import pandas as pd
-import util.util as util
+import utils.util as util
 import json
 
 import os

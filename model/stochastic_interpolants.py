@@ -8,7 +8,7 @@ import os.path
 
 import numpy as np
 import torch
-from util.util import unsqueeze_xdim, indicator_function
+from utils.util import unsqueeze_xdim, indicator_function
 from torch_ema import ExponentialMovingAverage
 from networks.conditional_unet_1D_si import *
 

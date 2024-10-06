@@ -14,10 +14,10 @@ import collections
 import gym
 import d4rl
 
-from dataset.dataset_util import *
-from heuristic_policies.relocate_policy import BatchRelocatePolicy
-from heuristic_policies.hammer_policy import HammerPolicy
-from heuristic_policies.door_policy import DoorPolicy
+from .dataset_util import *
+# from heuristic_policies.relocate_policy import BatchRelocatePolicy
+from ..heuristic_policies.hammer_policy import HammerPolicy
+from ..heuristic_policies.door_policy import DoorPolicy
 
 
 ENV_NAMES = ['relocate-human-v0', 'door-human-v0', 'pen-human-v0', 'hammer-human-v0']

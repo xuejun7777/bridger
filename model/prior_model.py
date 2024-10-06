@@ -6,7 +6,7 @@
 # ---------------------------------------------------------------
 
 import numpy as np
-from networks.conditional_unet_1D import *
+from ..networks.conditional_unet_1D import *
 
 
 class PriorModel:

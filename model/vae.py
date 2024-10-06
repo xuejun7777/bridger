@@ -11,7 +11,7 @@ from functools import partial
 import torch
 
 from diffusers.schedulers.scheduling_ddpm import DDPMScheduler
-from util.util import unsqueeze_xdim
+from utils.util import unsqueeze_xdim
 
 from torch_ema import ExponentialMovingAverage
 from networks.conditional_mlp_1D_vae import *

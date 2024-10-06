@@ -1,7 +1,9 @@
-from dataset.d4rl_state import D4RLDataset
-from model.prior_model import PriorModel
+# from dataset.d4rl_state import D4RLDataset
+from .d4rl_state import D4RLDataset
+from ..model.prior_model import PriorModel
 import os
-import util.util as util
+from ..utils import util
+# import utils.util as util
 
 
 def set_model_prior(model, prior_args):
@@ -9,8 +11,13 @@ def set_model_prior(model, prior_args):
     if prior_args['prior_policy'] == 'heuristic':
             prior_model = PriorModel(prior=dataset, pred_horizon=dataset.pred_horizon, action_dim=dataset.action_dim)
     elif prior_args['prior_policy'] == 'gaussian':
-        prior_model = PriorModel(prior=None, pred_horizon=dataset.pred_horizon, action_dim=dataset.action_dim)
+        print("Loading Gaussian prior")
+        if 'env_name' in prior_args:
+            prior_model = PriorModel(prior=None, pred_horizon=1, action_dim=prior_args['action_dim'])
+        elif 'task_name' in prior_args:
+            prior_model = PriorModel(prior=None, pred_horizon=dataset.pred_horizon, action_dim=dataset.action_dim)
     elif prior_args['prior_policy'] == 'cvae':
+        print("Loading CVAE prior")
         from model.vae import VAEModel
         spec_file = os.path.join(os.path.join('./dataset/config', prior_args["task_name"]))
         args = util.load_experiment_specifications(spec_file, 'vae' + '.json')
@@ -35,16 +42,19 @@ def set_model_prior(model, prior_args):
 
 
 def load_dataset(dataset_args):
-    if dataset_args['task_name'] == 'franka_kitchen_mix':
-        dataset = D4RLDataset(env_name='kitchen-mixed-v0', pred_horizon=16, obs_horizon=2, action_horizon=8, data_size=dataset_args['data_size'])
-    elif dataset_args['task_name'] == 'door_human':
-        dataset = D4RLDataset(env_name='door-human-v0', data_size=dataset_args['data_size'])
-    elif dataset_args['task_name'] == 'pen_human':
-        dataset = D4RLDataset(env_name='pen-human-v0', data_size=dataset_args['data_size'])
-    elif dataset_args['task_name'] == 'relocate_human':
-        dataset = D4RLDataset(env_name='relocate-human-v0', data_size=dataset_args['data_size'])
-    elif dataset_args['task_name'] == 'hammer_human':
-        dataset = D4RLDataset(env_name='hammer-human-v0', data_size=dataset_args['data_size'])
+    if 'task_name' in dataset_args:
+        if dataset_args['task_name'] == 'franka_kitchen_mix':
+            dataset = D4RLDataset(env_name='kitchen-mixed-v0', pred_horizon=16, obs_horizon=2, action_horizon=8, data_size=dataset_args['data_size'])
+        elif dataset_args['task_name'] == 'door_human':
+            dataset = D4RLDataset(env_name='door-human-v0', data_size=dataset_args['data_size'])
+        elif dataset_args['task_name'] == 'pen_human':
+            dataset = D4RLDataset(env_name='pen-human-v0', data_size=dataset_args['data_size'])
+        elif dataset_args['task_name'] == 'relocate_human':
+            dataset = D4RLDataset(env_name='relocate-human-v0', data_size=dataset_args['data_size'])
+        elif dataset_args['task_name'] == 'hammer_human':
+            dataset = D4RLDataset(env_name='hammer-human-v0', data_size=dataset_args['data_size'])
+        else:
+            raise NotImplementedError
     else:
-        raise NotImplementedError
+        dataset = None
     return dataset

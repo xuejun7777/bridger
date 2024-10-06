@@ -6,8 +6,8 @@ from dataset.load_dataset import load_dataset, set_model_prior
 from model.stochastic_interpolants import StochasticInterpolants
 from model.vae import VAEModel
 
-import util.util as util
-from util.logger import Logger
+import utils.util as util
+from utils.logger import Logger
 import json
 
 import os
@@ -34,7 +34,7 @@ def create_training_options():
     parser.add_argument("--pretrain", action="store_true", help="use pretrained model")
     parser.add_argument("--prior_policy", type=str, default='heuristic', help="{heuristic, gaussian, cvae}")
 
-    parser.add_argument("--gpu", type=int, default=1, help="set only if you wish to run on a particular device")
+    parser.add_argument("--gpu", type=int, default=0, help="set only if you wish to run on a particular device")
 
     opt = parser.parse_args()
 

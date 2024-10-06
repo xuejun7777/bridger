@@ -13,7 +13,8 @@ import torch
 from torch.utils.data import DataLoader
 from prefetch_generator import BackgroundGenerator
 from torch.optim import AdamW, lr_scheduler
-import util.distributed_util as dist_util
+from ..utils import distributed_util as dist_util
+# import utils.distributed_util as dist_util
 import numpy as np
 import random
 import json
@@ -267,5 +268,8 @@ def space_indices(num_steps, count):
 
 
 def unsqueeze_xdim(z, xdim):
-    bc_dim = (...,) + (None,) * len(xdim)
+    if isinstance(xdim, int):
+        bc_dim = (...,) + (None,) * 1
+    else:
+        bc_dim = (...,) + (None,) * len(xdim)
     return z[bc_dim]
