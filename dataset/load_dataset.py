@@ -16,6 +16,13 @@ def set_model_prior(model, prior_args):
             prior_model = PriorModel(prior=None, pred_horizon=1, action_dim=prior_args['action_dim'])
         elif 'task_name' in prior_args:
             prior_model = PriorModel(prior=None, pred_horizon=dataset.pred_horizon, action_dim=dataset.action_dim)
+            
+    elif prior_args['prior_policy'] == 'diffusion':
+        print("Loading Diffusion prior")
+        from ...agents.ql_diffusion import Diffusion_QL
+        prior_model = Diffusion_QL(**prior_args)
+        prior_model.load_model(prior_args['prior_dir'])
+        
     elif prior_args['prior_policy'] == 'cvae':
         print("Loading CVAE prior")
         from model.vae import VAEModel
